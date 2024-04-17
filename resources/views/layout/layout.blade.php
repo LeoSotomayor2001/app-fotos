@@ -54,7 +54,7 @@
             <nav class="text-xl flex  items-center gap-4 flex-col md:flex-row mt-2 md:mt-0">
                 @auth
                 <div class="bg-white text-black p-2 rounded-md hover:shadow-md transition duration-300 flex items-center justify-center">
-                    <a href="#" class="flex items-center gap-2">
+                    <a href="{{route('publicacion.crear')}}" class="flex items-center gap-2">
                         <img src="{{asset('img/camara.svg')}}" alt="Imagen login de usuarios" class="w-8">
                         <span class="font-semibold">Crear</span>
                     </a>
@@ -78,8 +78,8 @@
 
                 @guest
                     
-                    <a href="{{route('login')}}">Login</a>
-                    <a href="{{route('register')}}">Registro</a>
+                    <a href="{{route('login')}}" class="text-sky-600">Login</a>
+                    <a href="{{route('register')}}" class="text-sky-600">Registro</a>
                 @endguest
             </nav>
         </div>

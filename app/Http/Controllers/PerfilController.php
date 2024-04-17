@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use function Laravel\Prompts\error;
 use App\Http\Requests\PerfilRequest;
+
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Intervention\Image\Facades\Image;
 
 class PerfilController extends Controller
@@ -31,6 +35,7 @@ class PerfilController extends Controller
                     unlink($rutaImagenAnterior);
                 }
             }
+            try{
             $imagen=$request->file('imagen');
             
             $nombreImagen=Str::uuid() . '.' . $imagen->extension();
@@ -42,6 +47,10 @@ class PerfilController extends Controller
             }
             $imagenPath=public_path('perfiles') . '/' . $nombreImagen;
             $imagenServidor->save($imagenPath);
+            }
+            catch(Exception $e){
+                Log::channel('error')->error('Ha ocurrido un error' . $e->getMessage());
+            }
         }   
 
         //Guardar cambios

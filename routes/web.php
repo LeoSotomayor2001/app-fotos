@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\PublicacionController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,5 +28,11 @@ Route::middleware('auth')->group(function () {
 
     // Ruta para buscar perfiles (POST)
     Route::post('/buscar', [PerfilController::class, 'buscar'])->name('perfiles.buscar');
+
+    //Rutas para las publicaciones
+    // Route::get('/publicaciones/{user}',[PublicacionController::class,'index']);
+    Route::get('/{user:username}/publicaciones/{publicacion}', [PublicacionController::class, 'show'])->name('publicacion.show');
+    Route::get('/publicaciones/crear/',[PublicacionController::class,'create'])->name('publicacion.crear');
+    Route::post('/publicaciones/crear/',[PublicacionController::class,'store']);
 });
 

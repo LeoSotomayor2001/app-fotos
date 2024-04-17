@@ -3,14 +3,13 @@
 @section('contenido')
 
 
-
 <section class="mt-20 flex flex-col items-center md:flex-row md:justify-center gap-2">
     <div class="flex flex-col items-center">
-        <h1 class="text-center text-3xl font-bold md:mb-2">{{$user->username}}</h1>
+        <h1 class=" text-3xl font-bold md:mb-2">{{$user->username}}</h1>
         <img 
             src="{{$user->imagen ? asset('perfiles') . '/' . $user->imagen : asset('img/usuario.svg')}}" 
             alt="Imagen usuario" 
-            class="w-72 rounded-full transition-transform hover:scale-105"
+            class="w-72 rounded-full "
          >
     
     </div>
@@ -28,14 +27,30 @@
                 </a>
             @endif
         </div>
-        <p class="text-2xl mb-3">Fotos Subidas: 0</p>
+        <p class="text-2xl mb-3">Publicaciones: {{ $user->publicacion->count() }}</p>
     </div>
 </section>
 
-<section class="container mx-auto mt-10 ">
-    <h2 class="text-4xl text-center font-black my-10 md:mr-20">Publicaciones</h2>
-   
-</section>
+<section class="container mt-10">
+    <h2 class="text-4xl text-center font-black my-10">Publicaciones</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
+        @forelse ($publicaciones as $publicacion)
+            <a href="{{route('publicacion.show',[$user,$publicacion])}}" class="bg-white p-4">
+                <img 
+                    src="{{$publicacion->imagen ? asset('publicaciones') . '/' . $publicacion->imagen : asset('img/usuario.svg')}}" 
+                    alt="Imagen usuario" 
+                    class="w-full  md:w-72 transition-transform hover:scale-105"
+                >
+            </a >
+        @empty
+            <div class="flex justify-center items-center h-full">
+                <h2 class="text-center text-2xl">No hay publicaciones aún</h2>
+            </div>
+        @endforelse
+    </div>
 
+    <!-- Paginación si es necesario -->
+    {{ $publicaciones->links() }}
+</section>
 
 @endsection
