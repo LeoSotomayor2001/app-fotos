@@ -57,5 +57,20 @@ class PublicacionController extends Controller
             'user' => $user
         ]);
     }
+    
+    /** 
+     * Delete a publication.
+     *
+     * @param Publicacion $publicacion The publication to be deleted.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Publicacion $publicacion){
+        // Deletes the publication from the database.
+        $publicacion->delete();
+        
+        // Redirects to the user's inicio page.
+        return redirect()->route('inicio',auth()->user()->username);
+    }
 
 }

@@ -34,5 +34,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/{user:username}/publicaciones/{publicacion}', [PublicacionController::class, 'show'])->name('publicacion.show');
     Route::get('/publicaciones/crear/',[PublicacionController::class,'create'])->name('publicacion.crear');
     Route::post('/publicaciones/crear/',[PublicacionController::class,'store']);
+    Route::delete('/publicaciones/{publicacion}', [PublicacionController::class, 'destroy'])->name('publicacion.destroy');
 });
 

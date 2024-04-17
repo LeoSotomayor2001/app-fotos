@@ -3,9 +3,9 @@
 @section('contenido')
 
 
+<h1 class=" text-3xl font-bold md:mb-2 text-center mt-10">{{$user->username}}</h1>
 <section class="mt-20 flex flex-col items-center md:flex-row md:justify-center gap-2">
     <div class="flex flex-col items-center">
-        <h1 class=" text-3xl font-bold md:mb-2">{{$user->username}}</h1>
         <img 
             src="{{$user->imagen ? asset('perfiles') . '/' . $user->imagen : asset('img/usuario.svg')}}" 
             alt="Imagen usuario" 
@@ -31,10 +31,10 @@
     </div>
 </section>
 
-<section class="container mt-10">
+<section class="mt-10">
     <h2 class="text-4xl text-center font-black my-10">Publicaciones</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
-        @forelse ($publicaciones as $publicacion)
+    @forelse ($publicaciones as $publicacion)
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
             <a href="{{route('publicacion.show',[$user,$publicacion])}}" class="bg-white p-4">
                 <img 
                     src="{{$publicacion->imagen ? asset('publicaciones') . '/' . $publicacion->imagen : asset('img/usuario.svg')}}" 
@@ -42,12 +42,12 @@
                     class="w-full  md:w-72 transition-transform hover:scale-105"
                 >
             </a >
+        </div>
         @empty
-            <div class="flex justify-center items-center h-full">
-                <h2 class="text-center text-2xl">No hay publicaciones aún</h2>
+            <div class="flex justify-center items-center h-full ">
+                <h2 class="text-center text-2xl w-full">No hay publicaciones aún</h2>
             </div>
         @endforelse
-    </div>
 
     <!-- Paginación si es necesario -->
     {{ $publicaciones->links() }}
