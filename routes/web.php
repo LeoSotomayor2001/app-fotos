@@ -24,17 +24,18 @@ Route::fallback(function () {
     return view('errors.404');
 });
 
+// Ruta para buscar perfiles (POST)
+Route::post('/buscar', [PerfilController::class, 'buscar'])->name('perfiles.buscar');
+Route::get('/inicio/{user:username}', [InicioController::class, 'index'])->name('inicio');
+Route::get('/{user:username}/publicaciones/{publicacion}', [PublicacionController::class, 'show'])->name('publicacion.show');
+
 Route::middleware('auth')->group(function () {
-    Route::get('/inicio/{user:username}', [InicioController::class, 'index'])->name('inicio');
     Route::get('/editar-perfil', [PerfilController::class, 'index'])->name('editar.perfil');
     Route::post('/editar-perfil', [PerfilController::class, 'store'])->name('perfil.store');
 
-    // Ruta para buscar perfiles (POST)
-    Route::post('/buscar', [PerfilController::class, 'buscar'])->name('perfiles.buscar');
 
     //Rutas para las publicaciones
     //Route::get('/publicaciones/{user}',[PublicacionController::class,'index']);
-    Route::get('/{user:username}/publicaciones/{publicacion}', [PublicacionController::class, 'show'])->name('publicacion.show');
     Route::get('/publicaciones/crear/',[PublicacionController::class,'create'])->name('publicacion.crear');
     Route::post('/publicaciones/crear/',[PublicacionController::class,'store']);
     Route::delete('/publicaciones/{publicacion}', [PublicacionController::class, 'destroy'])->name('publicacion.destroy');

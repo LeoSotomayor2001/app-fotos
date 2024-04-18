@@ -28,7 +28,7 @@
                 </a>
             @endguest
 
-            @auth
+            
             <form method="POST" action="{{ route('perfiles.buscar') }}">
                 @csrf
                 <div class="flex justify-between gap-2 items-center">
@@ -46,9 +46,6 @@
                 
             </form>
             
-            
-            
-            @endauth
             
 
             <nav class="text-xl flex  items-center gap-4 flex-col md:flex-row mt-2 md:mt-0">

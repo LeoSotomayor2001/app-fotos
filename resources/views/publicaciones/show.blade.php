@@ -28,21 +28,24 @@
                 </p>   
             @endif
             <!-- Formulario para enviar un nuevo comentario -->
-            <form action="{{route('comentarios.store',['publicacion' => $publicacion,'user' => $user])}}" method="POST">
-                @csrf
-                <label for="comentario" class="block mb-2">Escribir comentario:</label>
-                <textarea name="comentario" id="comentario" cols="30" rows="4"
-                    class="border border-gray-300 p-2 rounded w-full"></textarea>
-                @error('comentario')
+           @auth
+               
+           <form action="{{route('comentarios.store',['publicacion' => $publicacion,'user' => $user])}}" method="POST">
+               @csrf
+               <label for="comentario" class="block mb-2">Escribir comentario:</label>
+               <textarea name="comentario" id="comentario" cols="30" rows="4"
+                   class="border border-gray-300 p-2 rounded w-full"></textarea>
+               @error('comentario')
 
-                    <p class="bg-red-500 text-white my-2 rounded-lg text-sm p-2 text-center"> 
-                        {{ $message }} 
-                    </p>
-                @enderror
-                <button type="submit"
-                    class="bg-blue-500 mb-3 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Enviar
-                    comentario</button>
-            </form>
+                   <p class="bg-red-500 text-white my-2 rounded-lg text-sm p-2 text-center"> 
+                       {{ $message }} 
+                   </p>
+               @enderror
+               <button type="submit"
+                   class="bg-blue-500 mb-3 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Enviar
+                   comentario</button>
+           </form>
+           @endauth
             {{-- Mostrar los comentarios desde el ultimo hasta el primero --}}
           <div class="overflow-y-auto max-h-96">
               @forelse ($publicacion->comentarios->sortByDesc('created_at') as $comentario)
@@ -51,22 +54,25 @@
                       <div class="flex justify-between items-center mb-2">
                           <span class="font-bold">{{ $comentario->user->username }}</span>
                           <span class="text-sm text-gray-500">{{ $comentario->created_at->diffForHumans() }}</span>
-                          @if (auth()->user()->id === $comentario->user_id)
-                              <form action="{{ route('comentarios.destroy', [$publicacion, $comentario]) }}" method="POST">
-                                  @csrf
-                                  @method('DELETE')
-                                  <button 
-                                    type="submit" 
-                                    class="text-red-500"
-                                    id="eliminarComentario"
-                                >
-                                    Eliminar
-                                </button>
-                              </form>
-                          @endif
-                          @if (auth()->user()->id === $comentario->user_id)
-                              <a href="{{ route('comentarios.edit', ['publicacion' => $publicacion, 'comentario' => $comentario]) }}" class="text-blue-500">Editar</a>
-                          @endif
+                          @auth
+                            @if (auth()->user()->id === $comentario->user_id)
+                                <form action="{{ route('comentarios.destroy', [$publicacion, $comentario]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button 
+                                        type="submit" 
+                                        class="text-red-500"
+                                        id="eliminarComentario"
+                                    >
+                                        Eliminar
+                                    </button>
+                                </form>
+                            @endif
+                            @if (auth()->user()->id === $comentario->user_id)
+                                <a href="{{ route('comentarios.edit', ['publicacion' => $publicacion, 'comentario' => $comentario]) }}" class="text-blue-500">Editar</a>
+                            @endif
+                              
+                          @endauth
                       </div>
                       <p class="text-gray-800">{{ $comentario->comentario }}</p>
                   </div>
