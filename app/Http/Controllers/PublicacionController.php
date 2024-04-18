@@ -10,6 +10,9 @@ use Intervention\Image\Facades\Image;
 use App\Http\Requests\PublicacionesRequest;
 use App\Models\Publicacion;
 use App\Models\User;
+use App\Notifications\LikeNotification;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class PublicacionController extends Controller
 {
@@ -17,14 +20,23 @@ class PublicacionController extends Controller
     public function index(User $user){
         
     }
-    public function like(Publicacion $publicacion)
+        // Método like
+    public function like(Publicacion $publicacion, Request $request)
     {
+
         $publicacion->likes()->attach(auth()->user()->id);
         $publicacion->increment('likes_count');
         
+        $likeUser = $request->user(); // Obtén el usuario que dio like
 
-        return redirect()->back();
-    }
+        // Crea la instancia de la notificación
+        $notification = new LikeNotification($likeUser, $publicacion);
+
+        // Envía la notificación al usuario propietario de la publicación
+        $publicacion->user->notify($notification);
+
+            return redirect()->back();
+        }
     public function unlike(Publicacion $publicacion){
         $publicacion->likes()->detach(auth()->user()->id);
         $publicacion->decrement('likes_count');
