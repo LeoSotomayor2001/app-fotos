@@ -30,6 +30,10 @@ class Publicacion extends Model
         ->select(['name', 'username','id']); // Selecciona solo las columnas 'name' , id y 'username' de la tabla User
     
     }
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'likes', 'publicacion_id', 'user_id');
+    }
     
 
 }

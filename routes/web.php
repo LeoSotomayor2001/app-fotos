@@ -39,6 +39,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/publicaciones/crear/',[PublicacionController::class,'create'])->name('publicacion.crear');
     Route::post('/publicaciones/crear/',[PublicacionController::class,'store']);
     Route::delete('/publicaciones/{publicacion}', [PublicacionController::class, 'destroy'])->name('publicacion.destroy');
+    Route::post('/publicacion/{publicacion}/like', [PublicacionController::class, 'like'])
+    ->name('publicacion.like');
+    
+    Route::delete('/publicacion/{publicacion}/like', [PublicacionController::class, 'unlike'])
+    ->name('publicacion.unlike');
 
     //Comentarios
     Route::post('/{user:username}/publicaciones/{publicacion}', [ComentarioController::class, 'store'])->name('comentarios.store');

@@ -17,7 +17,20 @@ class PublicacionController extends Controller
     public function index(User $user){
         
     }
+    public function like(Publicacion $publicacion)
+    {
+        $publicacion->likes()->attach(auth()->user()->id);
+        $publicacion->increment('likes_count');
+        
 
+        return redirect()->back();
+    }
+    public function unlike(Publicacion $publicacion){
+        $publicacion->likes()->detach(auth()->user()->id);
+        $publicacion->decrement('likes_count');
+
+        return redirect()->back();
+    }
     public function create(){
 
         return view('publicaciones.create');

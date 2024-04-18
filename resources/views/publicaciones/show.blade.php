@@ -7,8 +7,28 @@
         <!-- Título de la publicación -->
 
         <img src="{{ asset('publicaciones/' . $publicacion->imagen) }}" alt="{{ $publicacion->titulo }}"
-            class="mx-auto mb-4 w-full md:w-96"> <!-- Imagen de la publicación centrada -->
-        <p class="text-lg text-center">{{ $publicacion->descripcion }}</p> <!-- Descripción de la publicación -->
+            class="mx-auto mb-4 w-full md:w-96"> 
+        <p class="text-lg text-center">{{ $publicacion->descripcion }}</p>
+        <!-- Mostrar el conteo de likes -->
+        <div class="flex gap-4 justify-center items-center">
+            <p class="text-center">{{ $publicacion->likes_count }} Likes</p>
+    
+            <!-- Botón de "like" -->
+            <form action="{{ route('publicacion.like', $publicacion) }}" method="POST" class="text-center">
+                @csrf
+                @if ($publicacion->likes()->where('user_id', auth()->user()->id)->exists())
+                    @method('DELETE')
+                    <button type="submit" class="text-white font-bold rounded-lg p-1 bg-red-600">
+                        Quitar like
+                    </button>
+                @else
+                    <button type="submit" class="text-white font-bold rounded-lg p-1 bg-blue-600">
+                        Me gusta
+                    </button>
+                @endif
+            </form>
+
+        </div>
         @if(auth()->user() && auth()->user()->id === $user->id)
         <form action={{route("publicacion.destroy", $publicacion->id)}} method="POST" class="text-center mt-8">
             @csrf
@@ -51,14 +71,14 @@
               @forelse ($publicacion->comentarios->sortByDesc('created_at') as $comentario)
 
                   <div class="bg-gray-100 p-4 rounded-lg mb-4">
-                      <div class="flex justify-between items-center mb-2">
-                        <img 
-                        src="{{$user->imagen ? asset('perfiles') . '/' . $user->imagen : asset('img/usuario.svg')}}" 
-                        alt="Imagen usuario" 
-                        class="w-10 rounded-full "
-                        >
+                      <div class="flex gap-2 items-center mb-2">
+                            <img 
+                            src="{{$user->imagen ? asset('perfiles') . '/' . $user->imagen : asset('img/usuario.svg')}}" 
+                            alt="Imagen usuario" 
+                            class="w-10 rounded-full "
+                            >
                           <span class="font-bold">{{ $comentario->user->username }}</span>
-                          <span class="text-sm text-gray-500">{{ $comentario->created_at->diffForHumans() }}</span>
+                          
                           @auth
                             @if (auth()->user()->id === $comentario->user_id)
                                 <form action="{{ route('comentarios.destroy', [$publicacion, $comentario]) }}" method="POST">
@@ -66,7 +86,7 @@
                                     @method('DELETE')
                                     <button 
                                         type="submit" 
-                                        class="text-red-500"
+                                        class="text-red-500 mr-1 ml-1"
                                         id="eliminarComentario"
                                     >
                                         Eliminar
@@ -80,6 +100,7 @@
                           @endauth
                       </div>
                       <p class="text-gray-800">{{ $comentario->comentario }}</p>
+                      <span class="text-sm text-gray-500">{{ $comentario->created_at->diffForHumans() }}</span>
                   </div>
               @empty
                   <p class="text-center text-gray-500">No hay comentarios aún.</p>
