@@ -27,7 +27,12 @@
         </div>
         <div class="mb-4">
             <label for="imagen" class="block text-xl font-medium text-gray-700">Imagen</label>
-            <input type="file" name="imagen" id="imagen" placeholder="Seleccione una imagen"
+            <input 
+                type="file" 
+                name="imagen" 
+                id="imagen" 
+                accept="image/*"
+                placeholder="Seleccione una imagen"
                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black rounded-md">
             @error('imagen')
             <p class="bg-red-500 text-white my-2 rounded-lg text-sm p-2 

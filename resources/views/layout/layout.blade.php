@@ -54,12 +54,18 @@
             <nav class="text-xl flex  items-center gap-4 flex-col md:flex-row mt-2 md:mt-0">
                 @auth
                 <div class="bg-white text-black p-2 rounded-md hover:shadow-md transition duration-300 flex items-center justify-center">
+                    <a href="{{ route('notificaciones.index') }}" class="flex items-center gap-2">
+                        <img src="{{ asset('img/notificacion.svg') }}" alt="Imagen login de usuarios" class="w-8">
+                        <span class="font-semibold">Notificaciones ({{Auth::user()->unreadNotifications->count()}})</span>
+                    </a>
+                </div>
+                <div class="bg-white text-black p-2 rounded-md hover:shadow-md transition duration-300 flex items-center justify-center">
                     <a href="{{route('publicacion.crear')}}" class="flex items-center gap-2">
                         <img src="{{asset('img/camara.svg')}}" alt="Imagen login de usuarios" class="w-8">
                         <span class="font-semibold">Crear</span>
                     </a>
                 </div>
-                
+
                 <div class="bg-white text-black p-2 rounded-md hover:shadow-md transition duration-300  flex items-center justify-center">
                     <form action="{{route('logout')}}" method="POST" class="m-0">
                         @csrf
