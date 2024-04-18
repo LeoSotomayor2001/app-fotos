@@ -52,6 +52,11 @@
 
                   <div class="bg-gray-100 p-4 rounded-lg mb-4">
                       <div class="flex justify-between items-center mb-2">
+                        <img 
+                        src="{{$user->imagen ? asset('perfiles') . '/' . $user->imagen : asset('img/usuario.svg')}}" 
+                        alt="Imagen usuario" 
+                        class="w-10 rounded-full "
+                        >
                           <span class="font-bold">{{ $comentario->user->username }}</span>
                           <span class="text-sm text-gray-500">{{ $comentario->created_at->diffForHumans() }}</span>
                           @auth

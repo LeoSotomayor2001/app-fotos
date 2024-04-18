@@ -54,16 +54,18 @@ class NuevoComentarioNotificacion extends Notification
             //
         ];
     }
-   public function toDatabase($notifiable)
-   {
-       return [
-           'publicacion_id' => $this->publicacion->id,
-           'user_id' => $this->publicacion->user->id,
-           'comentario_user_id' => $this->comentario->user->id,
-           'title' => 'Nuevo comentario en tu publicación',
-           'message' => 'Hay un nuevo comentario en tu publicación.',
-           'action_url' => url('/notificaciones'),
-           'action_text' => 'Ver comentarios',
-       ];
-   }
+    public function toDatabase($notifiable)
+    {
+        return [
+            'publicacion_id' => $this->publicacion->id,
+            'user_id' => $this->publicacion->user->id,
+            'comentario_user_id' => $this->comentario->user->id,
+            'title' => 'Nuevo comentario en tu publicación',
+            'message' => 'El usuario ' . $this->comentario->user->name . 
+                ' hizo este comentario: "' . $this->comentario->comentario . '".' . ' En la publicacion: ' . $this->publicacion->titulo,
+            'user_image' => $this->comentario->user->imagen, // Agregar la URL de la imagen del usuario
+            'action_url' => route('publicacion.show', ['user' => $this->publicacion->user->username, 'publicacion' => $this->publicacion->id]),
+            'action_text' => 'Ver comentarios',
+        ];
+    }
 }
