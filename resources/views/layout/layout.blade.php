@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Fotos-APP</title>
     @vite('resources/css/app.css')
-    @vite('resources/js/app.js')
+
 </head>
 <body >
     <header class="p-3 bg-white text-white shadow">
@@ -99,5 +99,7 @@
     <footer class="text-center font-bold mt-10 p-5 text-gray-600">
         Fotos-App Todos los derechos reservados. Leodomí Sotomayor {{now()->year}}
     </footer>
+    @vite('resources/js/app.js')
+    
 </body>
 </html>

@@ -31,4 +31,27 @@ class ComentarioController extends Controller
         $comentario->delete();
         return back()->with('mensaje', 'Comentario borrado Correctamente');
     }
+  
+
+  public function edit(Publicacion $publicacion, Comentario $comentario)
+  {
+      // Verificar si el usuario es el creador del comentario
+      if (auth()->user()->id !== $comentario->user_id) {
+          return redirect()->back()->with('error', 'No tienes permiso para modificar este comentario');
+      }
+  
+      // Obtener el usuario asociado a la publicación
+      $user = $publicacion->user;
+  
+      return view('comentarios.edit', compact('publicacion', 'comentario', 'user'));
+  }
+    public function update(ComentarioRequest $request,  Publicacion $publicacion, $comentarioId){
+        $request->validated();
+        $user = $publicacion->user;
+        $comentario = Comentario::findOrFail($comentarioId);
+        $comentario->update([
+            'comentario' => $request->comentario
+        ]);
+        return redirect()->route('publicacion.show', [$user, $publicacion])->with('mensaje', 'Comentario actualizado Correctamente');
+    }
 }

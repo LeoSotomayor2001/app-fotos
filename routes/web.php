@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
     //Comentarios
     Route::post('/{user:username}/publicaciones/{publicacion}', [ComentarioController::class, 'store'])->name('comentarios.store');
     Route::delete('/publicaciones/{publicacion}/comentarios/{comentario}', [ComentarioController::class, 'destroy'])->name('comentarios.destroy');
+    Route::put('/publicaciones/{publicacion}/comentarios/{comentario}/editar', [ComentarioController::class, 'update'])->name('comentarios.update');
+    Route::get('/publicaciones/{publicacion}/comentarios/{comentario}/editar', [ComentarioController::class, 'edit'])->name('comentarios.edit');
     //Notificaciones
     Route::get('/notificaciones', NotificacionController::class)->name('notificaciones.index');
 });

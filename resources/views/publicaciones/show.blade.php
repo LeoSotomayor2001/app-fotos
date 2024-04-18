@@ -13,7 +13,7 @@
         <form action={{route("publicacion.destroy", $publicacion->id)}} method="POST" class="text-center mt-8">
             @csrf
             @method('DELETE')
-            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar
+            <button type="submit" id="eliminarPublicacion" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar
                 Publicación</button>
         </form>
         @endif
@@ -55,8 +55,17 @@
                               <form action="{{ route('comentarios.destroy', [$publicacion, $comentario]) }}" method="POST">
                                   @csrf
                                   @method('DELETE')
-                                  <button type="submit" class="text-red-500">Eliminar</button>
+                                  <button 
+                                    type="submit" 
+                                    class="text-red-500"
+                                    id="eliminarComentario"
+                                >
+                                    Eliminar
+                                </button>
                               </form>
+                          @endif
+                          @if (auth()->user()->id === $comentario->user_id)
+                              <a href="{{ route('comentarios.edit', ['publicacion' => $publicacion, 'comentario' => $comentario]) }}" class="text-blue-500">Editar</a>
                           @endif
                       </div>
                       <p class="text-gray-800">{{ $comentario->comentario }}</p>
