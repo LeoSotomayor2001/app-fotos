@@ -12,21 +12,24 @@
         <!-- Mostrar el conteo de likes -->
         <div class="flex gap-4 justify-center items-center">
             <p class="text-center">{{ $publicacion->likes_count }} Likes</p>
-    
-            <!-- Botón de "like" -->
-            <form action="{{ route('publicacion.like', $publicacion) }}" method="POST" class="text-center">
-                @csrf
-                @if ($publicacion->likes()->where('user_id', auth()->user()->id)->exists())
-                    @method('DELETE')
-                    <button type="submit" class="text-white font-bold rounded-lg p-1 bg-red-600">
-                        Quitar like
-                    </button>
-                @else
-                    <button type="submit" class="text-white font-bold rounded-lg p-1 bg-blue-600">
-                        Me gusta
-                    </button>
-                @endif
-            </form>
+            
+            @auth
+                <!-- Botón de "like" -->
+                <form action="{{ route('publicacion.like', $publicacion) }}" method="POST" class="text-center">
+                    @csrf
+                    @if ($publicacion->likes()->where('user_id', auth()->user()->id)->exists())
+                        @method('DELETE')
+                        <button type="submit" class="text-white font-bold rounded-lg p-1 bg-red-600">
+                            Quitar like
+                        </button>
+                    @else
+                        <button type="submit" class="text-white font-bold rounded-lg p-1 bg-blue-600">
+                            Me gusta
+                        </button>
+                    @endif
+                </form>
+            @endauth
+            
 
         </div>
         @if(auth()->user() && auth()->user()->id === $user->id)

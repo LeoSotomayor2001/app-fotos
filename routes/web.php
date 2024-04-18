@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ComentarioController;
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LoginController;
@@ -41,7 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/publicaciones/{publicacion}', [PublicacionController::class, 'destroy'])->name('publicacion.destroy');
     Route::post('/publicacion/{publicacion}/like', [PublicacionController::class, 'like'])
     ->name('publicacion.like');
-    
+
     Route::delete('/publicacion/{publicacion}/like', [PublicacionController::class, 'unlike'])
     ->name('publicacion.unlike');
 
@@ -52,5 +53,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/publicaciones/{publicacion}/comentarios/{comentario}/editar', [ComentarioController::class, 'edit'])->name('comentarios.edit');
     //Notificaciones
     Route::get('/notificaciones', NotificacionController::class)->name('notificaciones.index');
+
+    //Siguiendo a usuarios
+   Route::post('/{user:username}/follow', [FollowerController::class, 'store'])->name('users.follow');
+    Route::delete('/{user:username}/unfollow',[FollowerController::class,'destroy'])->name('users.unfollow');
 });
 

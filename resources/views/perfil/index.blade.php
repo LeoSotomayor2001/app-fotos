@@ -28,7 +28,30 @@
             @endif
         </div>
         <p class="text-2xl mb-3">Publicaciones: {{ $user->publicacion->count() }}</p>
+        <p class="text-2xl mb-3">Seguidores: {{$user->followers->count()}}</p>
+        <p class="text-2xl mb-3">Siguiendo: {{$user->followings->count()}}</p>
+       
+        @auth
+        @if(Auth::id() !== $user->id)
+            @if (!$user->siguiendo( auth()->user() ))
+                <form action="{{route('users.follow',$user)}}" method="POST">
+                @csrf
+                <input type="submit" class="bg-blue-500 text-white uppercase rounded-lg p-3 py-1
+                text-xs font-bold cursor-pointer" value="Seguir">
+                </form>
+            @else
+                <form action="{{route('users.unfollow',$user)}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <input type="submit" class="bg-red-500 text-white uppercase rounded-lg p-3 py-1
+                    text-xs font-bold cursor-pointer" value="Dejar de Seguir">
+                </form>
+            @endif
+        @endif
+           
+        @endauth
     </div>
+ 
 </section>
 
 <x-publicaciones-grid :publicaciones="$publicaciones" :user="$user"/>
