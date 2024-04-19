@@ -7,7 +7,7 @@
         <!-- Título de la publicación -->
 
         <img src="{{ asset('publicaciones/' . $publicacion->imagen) }}" alt="{{ $publicacion->titulo }}"
-            class="mx-auto mb-4 w-full md:w-96"> 
+            class="mx-auto mb-4 w-full md:w-96 rounded-lg"> 
         <p class="text-lg text-center">{{ $publicacion->descripcion }}</p>
         <!-- Mostrar el conteo de likes -->
         <div class="flex gap-4 justify-center items-center">

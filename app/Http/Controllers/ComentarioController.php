@@ -21,7 +21,11 @@ class ComentarioController extends Controller
             'publicacion_id'=> $publicacion->id ,
             'comentario' => $request->comentario
         ]);
-        $user->notify(new NuevoComentarioNotificacion($publicacion, $comentario));
+        // Verificar si el usuario autenticado es el creador de la publicación
+         if (auth()->user()->id !== $publicacion->user_id) {
+            // Si el usuario autenticado NO es el creador de la publicación, enviar la notificación al creador
+            $user->notify(new NuevoComentarioNotificacion($publicacion, $comentario));
+        }
         //Imprimir un mensaje
         return back()->with('mensaje','Comentario Realizado Correctamente');
     }
