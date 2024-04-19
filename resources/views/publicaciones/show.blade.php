@@ -32,7 +32,7 @@
             
 
         </div>
-        @if(auth()->user() && auth()->user()->id === $user->id)
+        @if(auth()->user() && auth()->user()->id === $publicacion->user->id)
         <form action={{route("publicacion.destroy", $publicacion->id)}} method="POST" class="text-center mt-8">
             @csrf
             @method('DELETE')
