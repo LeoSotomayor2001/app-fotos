@@ -61,7 +61,7 @@ class NuevoComentarioNotificacion extends Notification
             'user_id' => $this->publicacion->user->id,
             'comentario_user_id' => $this->comentario->user->id,
             'title' => 'Nuevo comentario en tu publicación',
-            'message' => 'El usuario ' . $this->comentario->user->name . 
+            'message' => 'El usuario ' . $this->comentario->user->username . 
                 ' hizo este comentario: "' . $this->comentario->comentario . '".' . ' En la publicacion: ' . $this->publicacion->titulo,
             'user_image' => $this->comentario->user->imagen, // Agregar la URL de la imagen del usuario
             'action_url' => route('publicacion.show', ['user' => $this->publicacion->user->username, 'publicacion' => $this->publicacion->id]),

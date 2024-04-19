@@ -53,7 +53,7 @@
     </div>
  
 </section>
-
+<h2 class="text-4xl text-center font-black my-10 md:col-span-2">Publicaciones</h2>
 <x-publicaciones-grid :publicaciones="$publicaciones" :user="$user"/>
 
 @endsection

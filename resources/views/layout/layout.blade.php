@@ -11,24 +11,11 @@
 <body >
     <header class="p-3 bg-white text-white shadow">
         <div class="container flex mx-auto justify-between items-center flex-col md:flex-row">
-            @auth
-                <a 
-                    href="{{route('inicio',auth()->user()->username)}}"
-                    class="text-3xl font-bold text-black"    
-                >
-                    Fotos-App
-                </a>
-            @endauth
-            @guest
-                <a 
-                    href="{{route('principal')}}"
-                    class="text-3xl font-bold text-black"    
-                >
-                    Fotos-App
-                </a>
-            @endguest
-
-            
+         
+            <a href="{{ route('principal') }}" class="mb-4 md:mb-0 text-3xl font-bold text-black hover:text-gray-800 transition-colors duration-300">
+                <span class="text-sky-600">Fotos-</span><span class="text-blue-500">App</span>
+            </a>
+   
             <form method="POST" action="{{ route('perfiles.buscar') }}">
                 @csrf
                 <div class="flex justify-between gap-2 items-center">
@@ -52,8 +39,17 @@
                 @auth
                 <div class="bg-white text-black p-2 rounded-md hover:shadow-md transition duration-300 flex items-center justify-center">
                     <a href="{{ route('notificaciones.index') }}" class="flex items-center gap-2">
-                        <img src="{{ asset('img/notificacion.svg') }}" alt="Imagen login de usuarios" class="w-8">
+                        <img src="{{ asset('img/notificacion.svg') }}" alt="Imagen notificacion" class="w-8">
                         <span class="font-semibold">Notificaciones ({{Auth::user()->unreadNotifications->count()}})</span>
+                    </a>
+                </div>
+                <div class="bg-white text-black p-2 rounded-md hover:shadow-md transition duration-300 flex items-center justify-center">
+                    <a 
+                        href="{{route('inicio',auth()->user()->username)}}"
+                        class="flex items-center gap-2"    
+                    >
+                        <img src="{{ asset('img/user.svg') }}" alt="Imagen perfil de usuario" class="w-6">
+                        <span class="font-semibold">Perfil</span>
                     </a>
                 </div>
                 <div class="bg-white text-black p-2 rounded-md hover:shadow-md transition duration-300 flex items-center justify-center">

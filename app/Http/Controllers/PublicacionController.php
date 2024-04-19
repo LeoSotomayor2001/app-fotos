@@ -11,14 +11,13 @@ use App\Http\Requests\PublicacionesRequest;
 use App\Models\Publicacion;
 use App\Models\User;
 use App\Notifications\LikeNotification;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Notification;
+
 
 class PublicacionController extends Controller
 {
     
     public function index(User $user){
-        
+       
     }
         // Método like
     public function like(Publicacion $publicacion, Request $request)

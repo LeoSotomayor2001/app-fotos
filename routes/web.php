@@ -9,7 +9,6 @@ use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\PublicacionController;
 use App\Http\Controllers\RegisterController;
-use App\Models\Comentario;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class,'index'])->name('principal');
@@ -36,7 +35,7 @@ Route::middleware('auth')->group(function () {
 
 
     //Rutas para las publicaciones
-    //Route::get('/publicaciones/{user}',[PublicacionController::class,'index']);
+    //Route::get('/',[PublicacionController::class,'index']);
     Route::get('/publicaciones/crear/',[PublicacionController::class,'create'])->name('publicacion.crear');
     Route::post('/publicaciones/crear/',[PublicacionController::class,'store']);
     Route::delete('/publicaciones/{publicacion}', [PublicacionController::class, 'destroy'])->name('publicacion.destroy');
